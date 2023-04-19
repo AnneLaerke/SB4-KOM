@@ -9,6 +9,10 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 import java.util.Random;
 
+/**
+ * @author AnneLaerke
+ */
+
 public class EnemyControlSystem implements IEntityProcessingService {
 
     @Override
@@ -42,6 +46,10 @@ public class EnemyControlSystem implements IEntityProcessingService {
         }
     }
 
+    /**
+     * Updates the entity's shape continuously
+     * @param entity the entity to be shaped
+     */
     private void updateShape(Entity entity) {
         float[] shapex = entity.getShapeX();
         float[] shapey = entity.getShapeY();

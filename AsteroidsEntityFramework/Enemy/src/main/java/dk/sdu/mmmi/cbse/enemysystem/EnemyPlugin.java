@@ -8,9 +8,9 @@ import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 
 /**
- *
- * @author alsie
+ * @author AnneLaerke
  */
+
 public class EnemyPlugin implements IGamePluginService {
 
     private Entity enemy;
