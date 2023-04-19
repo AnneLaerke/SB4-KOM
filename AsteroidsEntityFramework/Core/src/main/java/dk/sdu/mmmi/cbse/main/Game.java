@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import dk.sdu.mmmi.cbse.asteroid.AsteroidControlSystem;
+import dk.sdu.mmmi.cbse.asteroid.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
@@ -46,16 +48,21 @@ public class Game
         );
 
         IGamePluginService playerPlugin = new PlayerPlugin();
-
         IEntityProcessingService playerProcess = new PlayerControlSystem();
         entityPlugins.add(playerPlugin);
         entityProcessors.add(playerProcess);
 
         IGamePluginService enemyPlugin = new EnemyPlugin();
         IEntityProcessingService enemyProcess  = new EnemyControlSystem();
-
         entityPlugins.add(enemyPlugin);
         entityProcessors.add(enemyProcess);
+
+//        for (int i = 0; i < 10; i++) {
+            IGamePluginService asteroidPlugin = new AsteroidPlugin();
+            IEntityProcessingService asteroidProcess  = new AsteroidControlSystem();
+            entityPlugins.add(asteroidPlugin);
+            entityProcessors.add(asteroidProcess);
+//        }
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
@@ -69,6 +76,7 @@ public class Game
         // clear screen to black
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         gameData.setDelta(Gdx.graphics.getDeltaTime());
 
