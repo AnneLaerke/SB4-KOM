@@ -3,10 +3,15 @@ package dk.sdu.mmmi.cbse.enemysystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
+import dk.sdu.mmmi.cbse.common.data.entityparts.LifePart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.MovingPart;
 import dk.sdu.mmmi.cbse.common.data.entityparts.PositionPart;
+import dk.sdu.mmmi.cbse.common.data.entityparts.ShooterPart;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
+import dk.sdu.mmmi.cbse.common.services.IEntitySpawnService;
+import dk.sdu.mmmi.cbse.common.util.SPILocator;
 
+import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -20,8 +25,11 @@ public class EnemyControlSystem implements IEntityProcessingService {
         for (Entity enemy : world.getEntities(Enemy.class)) {
             PositionPart positionPart = enemy.getPart(PositionPart.class);
             MovingPart movingPart = enemy.getPart(MovingPart.class);
+            LifePart lifePart = enemy.getPart(LifePart.class);
+            ShooterPart shooterPart = enemy.getPart(ShooterPart.class);
 
             Random random = new Random();
+            Random random2 = new Random();
 
             int range = random.nextInt(3);
 
@@ -33,6 +41,25 @@ public class EnemyControlSystem implements IEntityProcessingService {
             }
             if (range == 2) {
                 movingPart.setUp(true);
+            }
+
+            if (lifePart.isIsHit()) {
+                lifePart.setLife(lifePart.getLife() - 1);
+                lifePart.setIsHit(false);
+            }
+
+            if (lifePart.getLife() == 0) {
+                world.removeEntity(enemy);
+            }
+
+            int range2 = random2.nextInt(30);
+
+            if (range2 == 1) {
+                Collection<IEntitySpawnService> bullets = SPILocator.locateAll(IEntitySpawnService.class);
+
+                for (IEntitySpawnService bullet : bullets) {
+                    world.addEntity(bullet.spawn(gameData, enemy));
+                }
             }
 
             movingPart.process(gameData, enemy);

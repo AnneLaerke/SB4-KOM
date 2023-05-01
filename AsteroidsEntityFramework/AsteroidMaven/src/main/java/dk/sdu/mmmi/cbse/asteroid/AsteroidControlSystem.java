@@ -20,6 +20,29 @@ public class AsteroidControlSystem implements IEntityProcessingService {
             MovingPart movingPart = asteroid.getPart(MovingPart.class);
             LifePart lifePart = asteroid.getPart(LifePart.class);
 
+            if (lifePart.isIsHit()) {
+                lifePart.reduceLife(1);
+                lifePart.setIsHit(false);
+
+                if (lifePart.getLife() == 0) {
+                    world.removeEntity(asteroid);
+
+                } else {
+                    asteroid.setRadius(10);
+
+                    Entity newAsteroid = new AsteroidPlugin().createAsteroid(gameData);
+
+                    newAsteroid.setRadius(asteroid.getRadius());
+                    PositionPart newAsteroidPosition = newAsteroid.getPart(PositionPart.class);
+                    newAsteroidPosition.setPosition(positionPart.getX(), positionPart.getY());
+
+                    LifePart newLifePart = newAsteroid.getPart(LifePart.class);
+                    newLifePart.setLife(lifePart.getLife());
+
+                    world.addEntity(newAsteroid);
+                }
+            }
+
             Random random = new Random();
 
             int range = random.nextInt(3);
@@ -37,16 +60,7 @@ public class AsteroidControlSystem implements IEntityProcessingService {
             positionPart.process(gameData, asteroid);
             movingPart.process(gameData, asteroid);
 
-            updateShape(asteroid, lifePart.getExpiration());
-
-            if (lifePart.isIsHit()) {
-                lifePart.reduceExpiration(1);
-                if (lifePart.getLife() == 0) {
-                    world.removeEntity(asteroid);
-                } else {
-                    world.addEntity(asteroid);
-                }
-            }
+            updateShape(asteroid, lifePart.getLife());
 
             movingPart.setLeft(false);
             movingPart.setRight(false);
@@ -74,6 +88,7 @@ public class AsteroidControlSystem implements IEntityProcessingService {
 
             shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * -20);
             shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * -20);
+
         } else if (asteroidSize == 1) {
             shapex[0] = (float) (x + Math.cos(radians) * 15);
             shapey[0] = (float) (y + Math.sin(radians) * 15);
@@ -86,7 +101,6 @@ public class AsteroidControlSystem implements IEntityProcessingService {
 
             shapex[3] = (float) (x + Math.cos(radians + 4 * 3.1415f / 5) * -15);
             shapey[3] = (float) (y + Math.sin(radians + 4 * 3.1415f / 5) * -15);
-
 
             entity.setShapeX(shapex);
             entity.setShapeY(shapey);

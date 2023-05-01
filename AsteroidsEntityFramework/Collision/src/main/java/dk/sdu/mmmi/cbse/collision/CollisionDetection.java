@@ -24,7 +24,10 @@ public class CollisionDetection implements IPostEntityProcessingService {
             for (Entity e2 : world.getEntities()) {
                 // Checks that it isn't the same entity instance we check for collision on
                 if (e1.getID().equals(e2.getID())) { continue; }
+                // Entities of the same type won't collide
+                if (e1.getClass().equals(e2.getClass())) { continue; }
                 if (collided(e1, e2)) {
+                    System.out.println(e1.getClass());
                     LifePart e1LifePart = e1.getPart(LifePart.class);
                     e1LifePart.setIsHit(true);
                 }
