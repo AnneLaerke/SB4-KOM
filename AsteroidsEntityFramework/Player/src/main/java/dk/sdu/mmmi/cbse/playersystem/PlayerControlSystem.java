@@ -1,8 +1,8 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
-import dk.sdu.mmmi.cbse.bullet.Bullet;
-import dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
-import dk.sdu.mmmi.cbse.bullet.BulletPlugin;
+//import dk.sdu.mmmi.cbse.bullet.Bullet;
+//import dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
+//import dk.sdu.mmmi.cbse.bullet.BulletPlugin;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.GameKeys;
@@ -44,7 +44,12 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
 //                IEntitySpawnService bullet = new BulletControlSystem();
 //                world.addEntity(bullet.spawn(gameData, player));
-                for (IEntitySpawnService bullet : SPILocator.locateAll(IEntitySpawnService.class)) {
+//                for (IEntitySpawnService bullet : SPILocator.locateAll(IEntitySpawnService.class)) {
+//                    world.addEntity(bullet.spawn(gameData, player));
+//                }
+                Collection<IEntitySpawnService> bullets = SPILocator.locateAll(IEntitySpawnService.class);
+
+                for (IEntitySpawnService bullet : bullets) {
                     world.addEntity(bullet.spawn(gameData, player));
                 }
             }
