@@ -17,6 +17,13 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Asteroid/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/AsteroidMaven/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Bullet/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Collision/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Common/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Core/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Enemy/pom.xml" />
+        <option value="$PROJECT_DIR$/AsteroidsEntityFramework/Player/pom.xml" />
       </set>
     </option>
   </component>
