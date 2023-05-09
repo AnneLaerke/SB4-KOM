@@ -18,9 +18,6 @@ import java.util.Collection;
 import java.util.ServiceLoader;
 
 import static dk.sdu.mmmi.cbse.common.data.GameKeys.*;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-import static java.lang.Math.sqrt;
 import static java.util.stream.Collectors.toList;
 
 /**
