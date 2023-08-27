@@ -14,6 +14,8 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.util.SPILocator;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
+@Component("game")
 public class Game
         implements ApplicationListener {
 
@@ -83,7 +86,7 @@ public class Game
 
 
         // Lookup all Game Plugins using ServiceLoader
-        for (IGamePluginService iGamePlugin : getPluginServices()) {
+        for (IGamePluginService iGamePlugin : this.entityPlugins) {
             iGamePlugin.start(gameData, world);
         }
     }
@@ -107,10 +110,10 @@ public class Game
 
     private void update() {
         // Update
-        for (IEntityProcessingService entityProcessorService : getEntityProcessingServices()) {
+        for (IEntityProcessingService entityProcessorService : this.entityProcessors) {
             entityProcessorService.process(gameData, world);
         }
-        for (IPostEntityProcessingService entityPostProcessorService : getPostEntityProcessingServices()) {
+        for (IPostEntityProcessingService entityPostProcessorService : this.entityPostProcessors) {
             entityPostProcessorService.process(gameData, world);
         }
     }
@@ -153,15 +156,15 @@ public class Game
     }
 
 
-    private Collection<? extends IGamePluginService> getPluginServices() {
-        return SPILocator.locateAll(IGamePluginService.class);
-    }
-
-    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
-        return SPILocator.locateAll(IEntityProcessingService.class);
-    }
-
-    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
-        return SPILocator.locateAll(IPostEntityProcessingService.class);
-    }
+//    private Collection<? extends IGamePluginService> getPluginServices() {
+//        return SPILocator.locateAll(IGamePluginService.class);
+//    }
+//
+//    private Collection<? extends IEntityProcessingService> getEntityProcessingServices() {
+//        return SPILocator.locateAll(IEntityProcessingService.class);
+//    }
+//
+//    private Collection<? extends IPostEntityProcessingService> getPostEntityProcessingServices() {
+//        return SPILocator.locateAll(IPostEntityProcessingService.class);
+//    }
 }

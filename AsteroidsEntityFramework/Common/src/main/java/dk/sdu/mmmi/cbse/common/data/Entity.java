@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Entity implements Serializable {
+public class        Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
 
     private float[] shapeX = new float[4];

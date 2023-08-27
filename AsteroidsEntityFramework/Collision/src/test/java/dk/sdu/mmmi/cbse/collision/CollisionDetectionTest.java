@@ -37,8 +37,14 @@ class CollisionDetectionTest {
 
     @Test
     public void testCollision() {
+
+        // this asserts that 2 two entities, of position (1,1) and (1,0) with a radius of 5 will collide
         assertTrue(collisionDetection.collided(entity1, entity2));
+
+        // this asserts that 2 two entities, of position (1,1) and (15,15) with a radius of 5 will not collide
         assertFalse(collisionDetection.collided(entity1, entity3));
+
+        // this asserts that 2 two entities, of position (1,0) and (15,15) with a radius of 5 will not collide
         assertFalse(collisionDetection.collided(entity2, entity3));
     }
 }
